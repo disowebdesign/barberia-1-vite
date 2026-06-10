@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RÍOS — Nuestro Trabajo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ── PAGE STYLES ── */
+    .page-hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(14,13,11,0.2) 0%, rgba(14,13,11,0.85) 100%);
+      z-index: 1;
+    }
+
+    /* Hero background image */
+    .page-hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .page-hero-title-wrap {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .page-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 16px;
+      opacity: 0;
+    }
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(60px, 10vw, 140px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .page-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px auto 0;
+      opacity: 0;
+    }
+
+    /* ── GALERÍA ── */
+    .trabajo-section {
+      background: var(--black);
+      padding: 100px 48px;
+    }
+    .trabajo-intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 80px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .trabajo-intro p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(240,235,224,0.5);
+      line-height: 1.8;
+      letter-spacing: 0.5px;
+    }
+    .trabajo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .trabajo-item {
+      position: relative;
+      overflow: hidden;
+      background: #1a1a17;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .trabajo-item--tall { aspect-ratio: 3 / 4; }
+    .trabajo-item--wide { aspect-ratio: 4 / 3; }
+    .trabajo-item--square { aspect-ratio: 1; }
+
+    .trabajo-item-inner {
+      position: absolute;
+      inset: 0;
+      background: #2a2520;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.8s ease;
+    }
+    .trabajo-item:hover .trabajo-item-inner {
+      transform: scale(1.04);
+    }
+
+    /* Real images */
+    .trabajo-item-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .trabajo-item:hover .trabajo-item-inner img {
+      transform: scale(1.06);
+    }
+
+    .trabajo-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14,13,11,0.75) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+    }
+    .trabajo-item:hover .trabajo-item-overlay { opacity: 1; }
+    .trabajo-item-tag {
+      font-family: 'DM Serif Display', serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+
+    /* Layout especial — primera fila: 1 tall + 2 square */
+    .trabajo-item:nth-child(1) { grid-row: span 2; aspect-ratio: unset; }
+    .trabajo-item:nth-child(1) { min-height: 600px; }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      background: #0e0d0b;
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(240,235,224,0.06);
+    }
+    .page-footer-back {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(240,235,224,0.4);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .page-footer-back:hover { color: var(--gold); }
+    .page-footer-copy {
+      font-family: 'DM Serif Display', serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(240,235,224,0.2);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .trabajo-grid { grid-template-columns: repeat(2, 1fr); }
+      .trabajo-item:nth-child(1) { grid-row: unset; min-height: unset; aspect-ratio: 3/4; }
+      .trabajo-section { padding: 60px 24px; }
+    }
+    @media (max-width: 480px) {
+      .trabajo-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="module" crossorigin src="/barberia-1-vite/assets/nav-Kn0SuLf2.js"></script>
+  <script type="module" crossorigin src="/barberia-1-vite/assets/page-C0Kx0NoN.js"></script>
+  <link rel="stylesheet" crossorigin href="/barberia-1-vite/assets/nav-CQt05GoX.css">
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <svg class="logo-svg" viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+          <text x="0"   y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">R</text>
+          <text x="72"  y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">Í</text>
+          <text x="108" y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">O</text>
+          <text x="185" y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">S</text>
+        </svg>
+        <div class="loader-subtitle">BARBER &amp; GROOM</div>
+        <div class="loader-line"></div>
+      </div>
+    </div>
+    <div class="loader-curtain-left"></div>
+    <div class="loader-curtain-right"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <a href="/barberia-1-vite/index.html" style="text-decoration:none">
+        <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" class="nav-logo-svg">
+          <text x="0" y="58" font-family="'DM Serif Display', serif" font-size="62" fill="#f0ebe0">RÍOS</text>
+        </svg>
+      </a>
+      <div class="nav-logo-tag">BARBER &amp; GROOM</div>
+    </div>
+    <div class="nav-right">
+      <a href="/barberia-1-vite/index.html#reservar" class="nav-cta">RESERVA YA!</a>
+      <a href="tel:+525512345678" class="nav-phone">+52 55 1234 5678</a>
+      <button class="nav-menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MENU OVERLAY -->
+  <div id="nav-overlay" aria-hidden="true" style="display:none">
+    <div class="nvo-inner">
+      <button class="nvo-close" id="nvoClose" aria-label="Cerrar menú">
+        <span class="nvo-close-line"></span>
+        <span class="nvo-close-line"></span>
+        EXIT
+      </button>
+      <div class="nvo-logo">
+        <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" class="nvo-logo-svg">
+          <text x="0" y="58" font-family="'DM Serif Display', serif" font-size="62" fill="#0e0d0b">RÍOS</text>
+        </svg>
+        <div class="nvo-logo-tag">BARBER &amp; GROOM</div>
+      </div>
+      <nav class="nvo-nav">
+        <a href="/barberia-1-vite/src/trabajo.html"   class="nvo-link" data-index="0">NUESTRO TRABAJO</a>
+        <a href="/barberia-1-vite/src/productos.html" class="nvo-link" data-index="1">PRODUCTOS</a>
+        <a href="/barberia-1-vite/src/precios.html"   class="nvo-link" data-index="2">LISTA DE PRECIOS</a>
+        <a href="/barberia-1-vite/src/nosotros.html"  class="nvo-link" data-index="3">NOSOTROS</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <img
+      class="page-hero-img"
+      src="https://i.pinimg.com/736x/a7/cb/e6/a7cbe627f8e1a75ed71ed39cc8b1b977.jpg"
+      alt="Barbería RÍOS"
+    />
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-title-wrap">
+      <span class="page-label">RÍOS BARBER &amp; GROOM</span>
+      <h1 class="page-title">NUESTRO<br>TRABAJO</h1>
+      <div class="page-divider"></div>
+    </div>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="trabajo-section">
+    <div class="trabajo-intro">
+      <p>Cada corte es una obra. Aquí documentamos el arte que sale de nuestras manos — desde el afeitado clásico con navaja hasta los cortes más contemporáneos.</p>
+    </div>
+    <div class="trabajo-grid">
+
+      <!-- 01 — Corte Clásico (tall, span 2 rows) -->
+      <div class="trabajo-item trabajo-item--tall">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://i.pinimg.com/736x/3e/3b/1e/3e3b1e3a6e2e6e1e5a5e5e5e5e5e5e5e.jpg"
+            onerror="this.src='https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80'"
+            alt="Corte Clásico"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Corte Clásico</span>
+        </div>
+      </div>
+
+      <!-- 02 — Afeitado -->
+      <div class="trabajo-item trabajo-item--square">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80"
+            alt="Afeitado con navaja"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Afeitado</span>
+        </div>
+      </div>
+
+      <!-- 03 — Barbería -->
+      <div class="trabajo-item trabajo-item--square">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80"
+            alt="Interior barbería"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Barbería</span>
+        </div>
+      </div>
+
+      <!-- 04 — Detalle fade -->
+      <div class="trabajo-item trabajo-item--wide">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=900&q=80"
+            alt="Detalle de corte"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Detalle</span>
+        </div>
+      </div>
+
+      <!-- 05 — Corte Fade -->
+      <div class="trabajo-item trabajo-item--square">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?w=800&q=80"
+            alt="Corte Fade"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Corte Fade</span>
+        </div>
+      </div>
+
+      <!-- 06 — Barba -->
+      <div class="trabajo-item trabajo-item--square">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80"
+            alt="Arreglo de barba"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Barba</span>
+        </div>
+      </div>
+
+      <!-- 07 — Ambiente -->
+      <div class="trabajo-item trabajo-item--wide">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=900&q=80"
+            alt="Ambiente barbería"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Ambiente</span>
+        </div>
+      </div>
+
+      <!-- 08 — Textura -->
+      <div class="trabajo-item trabajo-item--square">
+        <div class="trabajo-item-inner">
+          <img
+            src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80&crop=faces&fit=crop"
+            alt="Textura de corte"
+          />
+        </div>
+        <div class="trabajo-item-overlay">
+          <span class="trabajo-item-tag">Textura</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <a href="/barberia-1-vite/index.html" class="page-footer-back">← Volver al inicio</a>
+    <span class="page-footer-copy">© 2024 RÍOS BARBER &amp; GROOM</span>
+  </footer>
+
+
+  <!-- GSAP SCROLL ANIMATIONS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero elements
+      gsap.to('.page-label', {
+        opacity: 1, duration: 1, delay: 0.3, ease: 'power2.out'
+      });
+      gsap.to('.page-title', {
+        opacity: 1, y: 0, duration: 1.2, delay: 0.5, ease: 'power3.out'
+      });
+      gsap.to('.page-divider', {
+        opacity: 1, duration: 1, delay: 0.9, ease: 'power2.out'
+      });
+
+      // Intro paragraph
+      gsap.to('.trabajo-intro', {
+        scrollTrigger: {
+          trigger: '.trabajo-intro',
+          start: 'top 85%',
+        },
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out'
+      });
+
+      // Grid items — stagger by batches
+      gsap.to('.trabajo-item', {
+        scrollTrigger: {
+          trigger: '.trabajo-grid',
+          start: 'top 80%',
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.1,
+        ease: 'power3.out'
+      });
+    });
+  </script>
+</body>
+</html>

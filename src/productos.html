@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RÍOS — Productos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .page-hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(240,235,224,0.0) 0%, rgba(240,235,224,1) 100%);
+      z-index: 1;
+    }
+
+    /* Hero background image */
+    .page-hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .page-hero-title-wrap {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .page-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 16px;
+      opacity: 0;
+    }
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(60px, 10vw, 140px);
+      font-weight: 400;
+      color: var(--charcoal);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .page-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold-dark);
+      margin: 32px auto 0;
+      opacity: 0;
+    }
+
+    /* ── PRODUCTOS ── */
+    .productos-section {
+      background: var(--cream);
+      padding: 80px 48px 120px;
+    }
+    .productos-intro {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto 80px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .productos-intro p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 300;
+      color: rgba(26,26,24,0.5);
+      line-height: 1.8;
+    }
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .producto-card {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .producto-img-wrap {
+      aspect-ratio: 3 / 4;
+      background: #e0dbd0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .producto-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.7s ease;
+    }
+    .producto-card:hover .producto-img-wrap img {
+      transform: scale(1.05);
+    }
+    .producto-img-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,24,0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .producto-info { padding: 0 4px; }
+    .producto-categoria {
+      font-family: 'DM Serif Display', serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .producto-nombre {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(18px, 1.8vw, 24px);
+      font-weight: 400;
+      color: var(--charcoal);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .producto-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(26,26,24,0.5);
+      line-height: 1.7;
+    }
+    .producto-precio {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: var(--charcoal);
+      margin-top: 12px;
+      display: block;
+    }
+    .producto-cta {
+      display: inline-block;
+      margin-top: 16px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--charcoal);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26,26,24,0.3);
+      padding-bottom: 3px;
+      text-transform: uppercase;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .producto-cta:hover { color: var(--gold-dark); border-color: var(--gold-dark); }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      background: var(--charcoal);
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .page-footer-back {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(240,235,224,0.4);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .page-footer-back:hover { color: var(--gold-light); }
+    .page-footer-copy {
+      font-family: 'DM Serif Display', serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(240,235,224,0.2);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 768px) {
+      .productos-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; padding: 0; }
+      .productos-section { padding: 60px 24px 80px; }
+    }
+    @media (max-width: 480px) {
+      .productos-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script type="module" crossorigin src="/barberia-1-vite/assets/nav-Kn0SuLf2.js"></script>
+  <script type="module" crossorigin src="/barberia-1-vite/assets/page-C0Kx0NoN.js"></script>
+  <link rel="stylesheet" crossorigin href="/barberia-1-vite/assets/nav-CQt05GoX.css">
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <svg class="logo-svg" viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+          <text x="0"   y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">R</text>
+          <text x="72"  y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">Í</text>
+          <text x="108" y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">O</text>
+          <text x="185" y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">S</text>
+        </svg>
+        <div class="loader-subtitle">BARBER &amp; GROOM</div>
+        <div class="loader-line"></div>
+      </div>
+    </div>
+    <div class="loader-curtain-left"></div>
+    <div class="loader-curtain-right"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <a href="/barberia-1-vite/index.html" style="text-decoration:none">
+        <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" class="nav-logo-svg">
+          <text x="0" y="58" font-family="'DM Serif Display', serif" font-size="62" fill="#f0ebe0">RÍOS</text>
+        </svg>
+      </a>
+      <div class="nav-logo-tag">BARBER &amp; GROOM</div>
+    </div>
+    <div class="nav-right">
+      <a href="/barberia-1-vite/index.html#reservar" class="nav-cta">RESERVA YA!</a>
+      <a href="tel:+525512345678" class="nav-phone">+52 55 1234 5678</a>
+      <button class="nav-menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MENU OVERLAY -->
+  <div id="nav-overlay" aria-hidden="true" style="display:none">
+    <div class="nvo-inner">
+      <button class="nvo-close" id="nvoClose" aria-label="Cerrar menú">
+        <span class="nvo-close-line"></span>
+        <span class="nvo-close-line"></span>
+        EXIT
+      </button>
+      <div class="nvo-logo">
+        <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" class="nvo-logo-svg">
+          <text x="0" y="58" font-family="'DM Serif Display', serif" font-size="62" fill="#0e0d0b">RÍOS</text>
+        </svg>
+        <div class="nvo-logo-tag">BARBER &amp; GROOM</div>
+      </div>
+      <nav class="nvo-nav">
+        <a href="/barberia-1-vite/src/trabajo.html"   class="nvo-link" data-index="0">NUESTRO TRABAJO</a>
+        <a href="/barberia-1-vite/src/productos.html" class="nvo-link" data-index="1">PRODUCTOS</a>
+        <a href="/barberia-1-vite/src/precios.html"   class="nvo-link" data-index="2">LISTA DE PRECIOS</a>
+        <a href="/barberia-1-vite/src/nosotros.html"  class="nvo-link" data-index="3">NOSOTROS</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <img
+      class="page-hero-img"
+      src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=1400&q=80"
+      alt="Productos RÍOS"
+    />
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-title-wrap">
+      <span class="page-label">RÍOS COLLECTION</span>
+      <h1 class="page-title">PRODUCTOS</h1>
+      <div class="page-divider"></div>
+    </div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section class="productos-section">
+    <div class="productos-intro">
+      <p>Línea de grooming desarrollada por los barberos de RÍOS. Fórmulas de alta calidad pensadas para el caballero exigente.</p>
+    </div>
+    <div class="productos-grid">
+
+      <!-- 1 — Pomada Mate -->
+      <div class="producto-card">
+        <div class="producto-img-wrap">
+          <img
+            src="/barberia-1-vite/assets/producto-pomada-D_rUXM4Z.jpg"
+            alt="Pomada Mate RÍOS"
+          />
+        </div>
+        <div class="producto-info">
+          <span class="producto-categoria">Cabello</span>
+          <h3 class="producto-nombre">Pomada Mate RÍOS</h3>
+          <p class="producto-desc">Fijación fuerte, acabado natural. Control todo el día sin residuo.</p>
+          <span class="producto-precio">$320 MXN</span>
+          <a href="#" class="producto-cta">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 2 — Aceite de Barba -->
+      <div class="producto-card">
+        <div class="producto-img-wrap">
+          <img
+            src="/barberia-1-vite/assets/producto-aceite-Be3UoXXc.jpg"
+            alt="Aceite de Barba"
+          />
+        </div>
+        <div class="producto-info">
+          <span class="producto-categoria">Barba</span>
+          <h3 class="producto-nombre">Aceite de Barba</h3>
+          <p class="producto-desc">Hidrata, suaviza y da brillo. Aroma a cedro y vetiver.</p>
+          <span class="producto-precio">$280 MXN</span>
+          <a href="#" class="producto-cta">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 3 — Crema de Afeitar -->
+      <div class="producto-card">
+        <div class="producto-img-wrap">
+          <img
+            src="/barberia-1-vite/assets/producto-crema-C1laQ1qx.jpg"
+            alt="Crema de Afeitar"
+          />
+        </div>
+        <div class="producto-info">
+          <span class="producto-categoria">Afeitado</span>
+          <h3 class="producto-nombre">Crema de Afeitar</h3>
+          <p class="producto-desc">Espuma densa que protege la piel durante el afeitado clásico.</p>
+          <span class="producto-precio">$240 MXN</span>
+          <a href="#" class="producto-cta">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 4 — Shampoo -->
+      <div class="producto-card">
+        <div class="producto-img-wrap">
+          <img
+            src="/barberia-1-vite/assets/producto-shampoo-Ou-FNn72.jpg"
+            alt="Shampoo Fortalecedor"
+          />
+        </div>
+        <div class="producto-info">
+          <span class="producto-categoria">Cabello</span>
+          <h3 class="producto-nombre">Shampoo Fortalecedor</h3>
+          <p class="producto-desc">Limpieza profunda con extractos naturales. Uso diario.</p>
+          <span class="producto-precio">$220 MXN</span>
+          <a href="#" class="producto-cta">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 5 — Bálsamo de Barba -->
+      <div class="producto-card">
+        <div class="producto-img-wrap">
+          <img
+            src="/barberia-1-vite/assets/producto-balsamo-6OsGNo7t.jpg"
+            alt="Bálsamo de Barba"
+          />
+        </div>
+        <div class="producto-info">
+          <span class="producto-categoria">Barba</span>
+          <h3 class="producto-nombre">Bálsamo de Barba</h3>
+          <p class="producto-desc">Acondiciona y da forma. Ideal para barbas largas y medianas.</p>
+          <span class="producto-precio">$260 MXN</span>
+          <a href="#" class="producto-cta">Ver más →</a>
+        </div>
+      </div>
+
+      <!-- 6 — Aftershave -->
+      <div class="producto-card">
+        <div class="producto-img-wrap">
+          <img
+            src="/barberia-1-vite/assets/producto-aftershave-B29EnXcH.jpg"
+            alt="Aftershave RÍOS"
+          />
+        </div>
+        <div class="producto-info">
+          <span class="producto-categoria">Piel</span>
+          <h3 class="producto-nombre">Aftershave RÍOS</h3>
+          <p class="producto-desc">Loción refrescante post-afeitado. Cierra poros y calma la irritación.</p>
+          <span class="producto-precio">$300 MXN</span>
+          <a href="#" class="producto-cta">Ver más →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <a href="/barberia-1-vite/index.html" class="page-footer-back">← Volver al inicio</a>
+    <span class="page-footer-copy">© 2024 RÍOS BARBER &amp; GROOM</span>
+  </footer>
+
+
+  <!-- GSAP SCROLL ANIMATIONS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      gsap.registerPlugin(ScrollTrigger);
+
+      // Hero elements
+      gsap.to('.page-label', {
+        opacity: 1, duration: 1, delay: 0.3, ease: 'power2.out'
+      });
+      gsap.to('.page-title', {
+        opacity: 1, y: 0, duration: 1.2, delay: 0.5, ease: 'power3.out'
+      });
+      gsap.to('.page-divider', {
+        opacity: 1, duration: 1, delay: 0.9, ease: 'power2.out'
+      });
+
+      // Intro paragraph
+      gsap.to('.productos-intro', {
+        scrollTrigger: {
+          trigger: '.productos-intro',
+          start: 'top 85%',
+        },
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out'
+      });
+
+      // Product cards — stagger
+      gsap.to('.producto-card', {
+        scrollTrigger: {
+          trigger: '.productos-grid',
+          start: 'top 80%',
+        },
+        opacity: 1,
+        y: 0,
+        duration: 0.85,
+        stagger: 0.12,
+        ease: 'power3.out'
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RÍOS — Nosotros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    .page-hero {
+      min-height: 65vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 48px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(14,13,11,0.1) 0%, rgba(14,13,11,0.88) 100%);
+      z-index: 1;
+    }
+    .page-hero-title-wrap {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .page-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 16px;
+      opacity: 0;
+    }
+    .page-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(60px, 10vw, 140px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .page-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--gold);
+      margin: 32px auto 0;
+      opacity: 0;
+    }
+
+    /* ── HISTORIA ── */
+    .nosotros-historia {
+      background: var(--black);
+      padding: 120px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .historia-img-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .historia-img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: #1a1a17;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .historia-img-placeholder {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(240,235,224,0.1);
+      text-transform: uppercase;
+      text-align: center;
+      line-height: 2;
+    }
+    .historia-año {
+      position: absolute;
+      bottom: 32px;
+      left: 32px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      opacity: 0.7;
+    }
+    .historia-texto {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 32px;
+    }
+    .historia-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+    .historia-titulo {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+    }
+    .historia-parrafo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(240,235,224,0.5);
+      line-height: 1.9;
+      letter-spacing: 0.3px;
+    }
+    .historia-firma {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(28px, 3vw, 40px);
+      font-style: italic;
+      color: rgba(240,235,224,0.2);
+      margin-top: 8px;
+    }
+
+    /* ── VALORES ── */
+    .nosotros-valores {
+      background: #1a1a17;
+      padding: 100px 48px;
+    }
+    .valores-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .valores-label {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 16px;
+    }
+    .valores-titulo {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4vw, 56px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .valor-item {
+      padding: 48px 40px;
+      border-left: 1px solid rgba(240,235,224,0.06);
+      position: relative;
+    }
+    .valor-item:last-child { border-right: 1px solid rgba(240,235,224,0.06); }
+    .valor-numero {
+      font-family: 'DM Serif Display', serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      opacity: 0.6;
+      display: block;
+      margin-bottom: 20px;
+    }
+    .valor-titulo {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+    .valor-texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(240,235,224,0.4);
+      line-height: 1.8;
+    }
+
+    /* ── NÚMEROS ── */
+    .nosotros-numeros {
+      background: var(--black);
+      padding: 100px 48px;
+      border-top: 1px solid rgba(240,235,224,0.06);
+    }
+    .numeros-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .numero-item {
+      text-align: center;
+      padding: 40px 24px;
+      border-left: 1px solid rgba(240,235,224,0.06);
+    }
+    .numero-item:last-child { border-right: 1px solid rgba(240,235,224,0.06); }
+    .numero-cifra {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .numero-sufijo {
+      color: var(--gold);
+    }
+    .numero-desc {
+      font-family: 'DM Serif Display', serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: rgba(240,235,224,0.3);
+      text-transform: uppercase;
+    }
+
+    /* ── FOOTER ── */
+    .page-footer {
+      background: #0e0d0b;
+      padding: 40px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(240,235,224,0.06);
+    }
+    .page-footer-back {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: rgba(240,235,224,0.4);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .page-footer-back:hover { color: var(--gold); }
+    .page-footer-copy {
+      font-family: 'DM Serif Display', serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(240,235,224,0.2);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .nosotros-historia { grid-template-columns: 1fr; gap: 60px 0; padding: 80px 24px; }
+      .valores-grid { grid-template-columns: 1fr; }
+      .valor-item { border-left: none; border-top: 1px solid rgba(240,235,224,0.06); }
+      .valor-item:last-child { border-right: none; }
+      .numeros-grid { grid-template-columns: repeat(2, 1fr); }
+      .numero-item:nth-child(3) { border-left: none; }
+      .nosotros-numeros, .nosotros-valores { padding: 60px 24px; }
+    }
+  </style>
+  <script type="module" crossorigin src="/barberia-1-vite/assets/nav-Kn0SuLf2.js"></script>
+  <script type="module" crossorigin src="/barberia-1-vite/assets/page-C0Kx0NoN.js"></script>
+  <link rel="stylesheet" crossorigin href="/barberia-1-vite/assets/nav-CQt05GoX.css">
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">
+        <svg class="logo-svg" viewBox="0 0 260 120" xmlns="http://www.w3.org/2000/svg">
+          <text x="0"   y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">R</text>
+          <text x="72"  y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">Í</text>
+          <text x="108" y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">O</text>
+          <text x="185" y="98" class="logo-letter" font-family="'DM Serif Display', serif" font-size="110" fill="#f0ebe0">S</text>
+        </svg>
+        <div class="loader-subtitle">BARBER &amp; GROOM</div>
+        <div class="loader-line"></div>
+      </div>
+    </div>
+    <div class="loader-curtain-left"></div>
+    <div class="loader-curtain-right"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <a href="/barberia-1-vite/index.html" style="text-decoration:none">
+        <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" class="nav-logo-svg">
+          <text x="0" y="58" font-family="'DM Serif Display', serif" font-size="62" fill="#f0ebe0">RÍOS</text>
+        </svg>
+      </a>
+      <div class="nav-logo-tag">BARBER &amp; GROOM</div>
+    </div>
+    <div class="nav-right">
+      <a href="/barberia-1-vite/index.html#reservar" class="nav-cta">RESERVA YA!</a>
+      <a href="tel:+525512345678" class="nav-phone">+52 55 1234 5678</a>
+      <button class="nav-menu" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MENU OVERLAY -->
+  <div id="nav-overlay" aria-hidden="true" style="display:none">
+    <div class="nvo-inner">
+      <button class="nvo-close" id="nvoClose" aria-label="Cerrar menú">
+        <span class="nvo-close-line"></span>
+        <span class="nvo-close-line"></span>
+        EXIT
+      </button>
+      <div class="nvo-logo">
+        <svg viewBox="0 0 160 70" xmlns="http://www.w3.org/2000/svg" class="nvo-logo-svg">
+          <text x="0" y="58" font-family="'DM Serif Display', serif" font-size="62" fill="#0e0d0b">RÍOS</text>
+        </svg>
+        <div class="nvo-logo-tag">BARBER &amp; GROOM</div>
+      </div>
+      <nav class="nvo-nav">
+        <a href="/barberia-1-vite/src/trabajo.html"   class="nvo-link" data-index="0">NUESTRO TRABAJO</a>
+        <a href="/barberia-1-vite/src/productos.html" class="nvo-link" data-index="1">PRODUCTOS</a>
+        <a href="/barberia-1-vite/src/precios.html"   class="nvo-link" data-index="2">LISTA DE PRECIOS</a>
+        <a href="/barberia-1-vite/src/nosotros.html"  class="nvo-link" data-index="3">NOSOTROS</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-title-wrap">
+      <span class="page-label">EST. 2019 — CIUDAD DE MÉXICO</span>
+      <h1 class="page-title">NOSOTROS</h1>
+      <div class="page-divider"></div>
+    </div>
+  </section>
+
+  <!-- HISTORIA -->
+  <section style="background:var(--black); padding: 120px 48px;">
+    <div class="nosotros-historia" style="padding:0;">
+      <div class="historia-img-wrap">
+        <div class="historia-img">
+          <span class="historia-img-placeholder">FOTO<br>BARBERÍA</span>
+        </div>
+        <span class="historia-año">EST. 2019</span>
+      </div>
+      <div class="historia-texto">
+        <span class="historia-label">Nuestra historia</span>
+        <h2 class="historia-titulo">Un espacio donde<br>el arte se afila</h2>
+        <p class="historia-parrafo">RÍOS nació en 2019 de una idea simple: que el caballero moderno merece un lugar donde el tiempo se detiene, donde cada detalle importa y donde salir sintiéndose extraordinario no es un lujo, sino el estándar.</p>
+        <p class="historia-parrafo">Fundado por Carlos Ríos tras años de formación en Madrid y Ciudad de México, RÍOS combina las técnicas del afeitado clásico europeo con la energía y cultura de México.</p>
+        <span class="historia-firma">Carlos Ríos</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALORES -->
+  <section class="nosotros-valores">
+    <div class="valores-header">
+      <span class="valores-label">Lo que nos define</span>
+      <h2 class="valores-titulo">Nuestros valores</h2>
+    </div>
+    <div class="valores-grid">
+      <div class="valor-item">
+        <span class="valor-numero">01</span>
+        <h3 class="valor-titulo">Precisión</h3>
+        <p class="valor-texto">Cada línea, cada degradado, cada navajada es ejecutada con atención absoluta al detalle. No hay lugar para la mediocridad.</p>
+      </div>
+      <div class="valor-item">
+        <span class="valor-numero">02</span>
+        <h3 class="valor-titulo">Experiencia</h3>
+        <p class="valor-texto">Más allá del corte, RÍOS es un ritual. Desde el momento en que entras hasta que sales, cada elemento está diseñado para que te sientas único.</p>
+      </div>
+      <div class="valor-item">
+        <span class="valor-numero">03</span>
+        <h3 class="valor-titulo">Comunidad</h3>
+        <p class="valor-texto">Somos un punto de encuentro. Un lugar donde el caballero de hoy puede ser él mismo, conectar y volver a casa sintiéndose en su mejor versión.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NÚMEROS -->
+  <section class="nosotros-numeros">
+    <div class="numeros-grid">
+      <div class="numero-item">
+        <span class="numero-cifra">5<span class="numero-sufijo">+</span></span>
+        <span class="numero-desc">Años de experiencia</span>
+      </div>
+      <div class="numero-item">
+        <span class="numero-cifra">4</span>
+        <span class="numero-desc">Barberos expertos</span>
+      </div>
+      <div class="numero-item">
+        <span class="numero-cifra">10<span class="numero-sufijo">k</span></span>
+        <span class="numero-desc">Clientes atendidos</span>
+      </div>
+      <div class="numero-item">
+        <span class="numero-cifra">1</span>
+        <span class="numero-desc">Estándar: excelencia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <a href="/barberia-1-vite/index.html" class="page-footer-back">← Volver al inicio</a>
+    <span class="page-footer-copy">© 2024 RÍOS BARBER &amp; GROOM</span>
+  </footer>
+
+</body>
+</html>
