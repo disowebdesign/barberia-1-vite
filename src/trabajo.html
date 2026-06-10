@@ -8,7 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Barlow+Condensed:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* ── PAGE STYLES ── */
     .page-hero {
       min-height: 60vh;
       display: flex;
@@ -26,8 +25,6 @@
       background: linear-gradient(to bottom, rgba(14,13,11,0.2) 0%, rgba(14,13,11,0.85) 100%);
       z-index: 1;
     }
-
-    /* Hero background image */
     .page-hero-img {
       position: absolute;
       inset: 0;
@@ -38,7 +35,6 @@
       opacity: 0.45;
       z-index: 0;
     }
-
     .page-hero-title-wrap {
       position: relative;
       z-index: 2;
@@ -73,15 +69,15 @@
       opacity: 0;
     }
 
-    /* ── GALERÍA ── */
+    /* ── TRABAJO ── */
     .trabajo-section {
       background: var(--black);
-      padding: 100px 48px;
+      padding: 100px 48px 140px;
     }
     .trabajo-intro {
       text-align: center;
       max-width: 600px;
-      margin: 0 auto 80px;
+      margin: 0 auto 100px;
       opacity: 0;
       transform: translateY(30px);
     }
@@ -93,39 +89,87 @@
       line-height: 1.8;
       letter-spacing: 0.5px;
     }
-    .trabajo-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+
+    /* Bloque servicio */
+    .srv-bloque {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 0 auto 120px;
+      opacity: 0;
+      transform: translateY(50px);
     }
+    .srv-bloque:last-child { margin-bottom: 0; }
+
+    .srv-bloque-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: baseline;
+      gap: 24px 40px;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(240,235,224,0.08);
+    }
+    .srv-bloque-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+    .srv-bloque-titulo {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .srv-bloque-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(240,235,224,0.4);
+      line-height: 1.8;
+      max-width: 320px;
+      text-align: right;
+    }
+
+    /* Grids de fotos */
+    .srv-bloque-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .srv-bloque-grid--3col {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+    .srv-bloque-grid--3col .trabajo-item:first-child {
+      grid-row: span 2;
+      aspect-ratio: unset;
+      min-height: 560px;
+    }
+    .srv-bloque-grid--2col {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Items */
     .trabajo-item {
       position: relative;
       overflow: hidden;
       background: #1a1a17;
       cursor: pointer;
-      opacity: 0;
-      transform: translateY(40px);
     }
-    .trabajo-item--tall { aspect-ratio: 3 / 4; }
-    .trabajo-item--wide { aspect-ratio: 4 / 3; }
+    .trabajo-item--tall   { aspect-ratio: 3 / 4; }
+    .trabajo-item--wide   { aspect-ratio: 4 / 3; }
     .trabajo-item--square { aspect-ratio: 1; }
+    .trabajo-item--rect   { aspect-ratio: 16 / 9; }
 
     .trabajo-item-inner {
       position: absolute;
       inset: 0;
-      background: #2a2520;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.8s ease;
     }
-    .trabajo-item:hover .trabajo-item-inner {
-      transform: scale(1.04);
-    }
-
-    /* Real images */
     .trabajo-item-inner img {
       width: 100%;
       height: 100%;
@@ -134,9 +178,7 @@
       display: block;
       transition: transform 0.8s ease;
     }
-    .trabajo-item:hover .trabajo-item-inner img {
-      transform: scale(1.06);
-    }
+    .trabajo-item:hover .trabajo-item-inner img { transform: scale(1.06); }
 
     .trabajo-item-overlay {
       position: absolute;
@@ -157,10 +199,6 @@
       color: var(--gold-light);
       text-transform: uppercase;
     }
-
-    /* Layout especial — primera fila: 1 tall + 2 square */
-    .trabajo-item:nth-child(1) { grid-row: span 2; aspect-ratio: unset; }
-    .trabajo-item:nth-child(1) { min-height: 600px; }
 
     /* ── FOOTER ── */
     .page-footer {
@@ -189,13 +227,16 @@
       text-transform: uppercase;
     }
 
-    @media (max-width: 768px) {
-      .trabajo-grid { grid-template-columns: repeat(2, 1fr); }
-      .trabajo-item:nth-child(1) { grid-row: unset; min-height: unset; aspect-ratio: 3/4; }
-      .trabajo-section { padding: 60px 24px; }
+    @media (max-width: 900px) {
+      .srv-bloque-header { grid-template-columns: auto 1fr; }
+      .srv-bloque-desc { grid-column: span 2; text-align: left; max-width: 100%; }
+      .srv-bloque-grid--3col { grid-template-columns: 1fr 1fr; }
+      .srv-bloque-grid--3col .trabajo-item:first-child { grid-row: unset; min-height: unset; aspect-ratio: 3/4; }
+      .trabajo-section { padding: 60px 24px 80px; }
     }
     @media (max-width: 480px) {
-      .trabajo-grid { grid-template-columns: 1fr; }
+      .srv-bloque-grid--3col,
+      .srv-bloque-grid--2col { grid-template-columns: 1fr; }
     }
   </style>
   <script type="module" crossorigin src="/barberia-1-vite/assets/nav-Kn0SuLf2.js"></script>
@@ -266,11 +307,9 @@
 
   <!-- HERO -->
   <section class="page-hero">
-    <img
-      class="page-hero-img"
+    <img class="page-hero-img"
       src="https://i.pinimg.com/736x/a7/cb/e6/a7cbe627f8e1a75ed71ed39cc8b1b977.jpg"
-      alt="Barbería RÍOS"
-    />
+      alt="Barbería RÍOS" />
     <div class="page-hero-bg"></div>
     <div class="page-hero-title-wrap">
       <span class="page-label">RÍOS BARBER &amp; GROOM</span>
@@ -279,119 +318,94 @@
     </div>
   </section>
 
-  <!-- GALERÍA -->
+  <!-- TRABAJO -->
   <section class="trabajo-section">
+
     <div class="trabajo-intro">
-      <p>Cada corte es una obra. Aquí documentamos el arte que sale de nuestras manos — desde el afeitado clásico con navaja hasta los cortes más contemporáneos.</p>
+      <p>Cada visita es una obra. Aquí documentamos el arte que sale de nuestras manos — precisión, estilo y cuidado en cada servicio.</p>
     </div>
-    <div class="trabajo-grid">
 
-      <!-- 01 — Corte Clásico (tall, span 2 rows) -->
-      <div class="trabajo-item trabajo-item--tall">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://i.pinimg.com/736x/3e/3b/1e/3e3b1e3a6e2e6e1e5a5e5e5e5e5e5e5e.jpg"
-            onerror="this.src='https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80'"
-            alt="Corte Clásico"
-          />
+    <!-- ── 01 CORTE ── -->
+    <div class="srv-bloque" id="bloque-corte">
+      <div class="srv-bloque-header">
+        <span class="srv-bloque-num">01</span>
+        <h2 class="srv-bloque-titulo">Corte</h2>
+        <p class="srv-bloque-desc">Desde el clásico hasta el degradado más contemporáneo. Cada corte refleja tu personalidad y estilo de vida, ejecutado con precisión absoluta.</p>
+      </div>
+      <div class="srv-bloque-grid srv-bloque-grid--3col">
+        <div class="trabajo-item trabajo-item--tall">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?w=800&q=80" alt="Corte clásico" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Clásico</span></div>
         </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Corte Clásico</span>
+        <div class="trabajo-item trabajo-item--square">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&q=80" alt="Fade" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Fade</span></div>
+        </div>
+        <div class="trabajo-item trabajo-item--square">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80" alt="Degradado" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Degradado</span></div>
         </div>
       </div>
-
-      <!-- 02 — Afeitado -->
-      <div class="trabajo-item trabajo-item--square">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80"
-            alt="Afeitado con navaja"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Afeitado</span>
-        </div>
-      </div>
-
-      <!-- 03 — Barbería -->
-      <div class="trabajo-item trabajo-item--square">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80"
-            alt="Interior barbería"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Barbería</span>
-        </div>
-      </div>
-
-      <!-- 04 — Detalle fade -->
-      <div class="trabajo-item trabajo-item--wide">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=900&q=80"
-            alt="Detalle de corte"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Detalle</span>
-        </div>
-      </div>
-
-      <!-- 05 — Corte Fade -->
-      <div class="trabajo-item trabajo-item--square">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?w=800&q=80"
-            alt="Corte Fade"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Corte Fade</span>
-        </div>
-      </div>
-
-      <!-- 06 — Barba -->
-      <div class="trabajo-item trabajo-item--square">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80"
-            alt="Arreglo de barba"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Barba</span>
-        </div>
-      </div>
-
-      <!-- 07 — Ambiente -->
-      <div class="trabajo-item trabajo-item--wide">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=900&q=80"
-            alt="Ambiente barbería"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Ambiente</span>
-        </div>
-      </div>
-
-      <!-- 08 — Textura -->
-      <div class="trabajo-item trabajo-item--square">
-        <div class="trabajo-item-inner">
-          <img
-            src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80&crop=faces&fit=crop"
-            alt="Textura de corte"
-          />
-        </div>
-        <div class="trabajo-item-overlay">
-          <span class="trabajo-item-tag">Textura</span>
-        </div>
-      </div>
-
     </div>
+
+    <!-- ── 02 AFEITADO ── -->
+    <div class="srv-bloque" id="bloque-afeitado">
+      <div class="srv-bloque-header">
+        <span class="srv-bloque-num">02</span>
+        <h2 class="srv-bloque-titulo">Afeitado</h2>
+        <p class="srv-bloque-desc">La tradición del afeitado con navaja, perfeccionada. Un ritual de cuidado que combina técnica clásica europea con atención al detalle.</p>
+      </div>
+      <div class="srv-bloque-grid srv-bloque-grid--3col">
+        <div class="trabajo-item trabajo-item--tall">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80" alt="Afeitado navaja" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Navaja</span></div>
+        </div>
+        <div class="trabajo-item trabajo-item--square">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80" alt="Perfilado barba" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Perfilado</span></div>
+        </div>
+        <div class="trabajo-item trabajo-item--square">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800&q=80" alt="Acabado" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Acabado</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 03 MANICURE & PEDICURE ── -->
+    <div class="srv-bloque" id="bloque-manicure">
+      <div class="srv-bloque-header">
+        <span class="srv-bloque-num">03</span>
+        <h2 class="srv-bloque-titulo">Manicure &amp;<br>Pedicure</h2>
+        <p class="srv-bloque-desc">Tratamientos de lujo diseñados para el caballero moderno. Cuidado de manos y pies en un ambiente exclusivo, con productos de primera calidad.</p>
+      </div>
+      <div class="srv-bloque-grid srv-bloque-grid--2col">
+        <div class="trabajo-item trabajo-item--rect">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=900&q=80" alt="Manicure" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Manicure</span></div>
+        </div>
+        <div class="trabajo-item trabajo-item--rect">
+          <div class="trabajo-item-inner">
+            <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?w=900&q=80" alt="Pedicure" />
+          </div>
+          <div class="trabajo-item-overlay"><span class="trabajo-item-tag">Pedicure</span></div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- FOOTER -->
@@ -401,44 +415,36 @@
   </footer>
 
 
-  <!-- GSAP SCROLL ANIMATIONS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       gsap.registerPlugin(ScrollTrigger);
 
-      // Hero elements
-      gsap.to('.page-label', {
-        opacity: 1, duration: 1, delay: 0.3, ease: 'power2.out'
-      });
-      gsap.to('.page-title', {
-        opacity: 1, y: 0, duration: 1.2, delay: 0.5, ease: 'power3.out'
-      });
-      gsap.to('.page-divider', {
-        opacity: 1, duration: 1, delay: 0.9, ease: 'power2.out'
-      });
+      // Hero
+      gsap.to('.page-label',   { opacity: 1, duration: 1, delay: 0.3, ease: 'power2.out' });
+      gsap.to('.page-title',   { opacity: 1, y: 0, duration: 1.2, delay: 0.5, ease: 'power3.out' });
+      gsap.to('.page-divider', { opacity: 1, duration: 1, delay: 0.9, ease: 'power2.out' });
 
-      // Intro paragraph
+      // Intro
       gsap.to('.trabajo-intro', {
-        scrollTrigger: {
-          trigger: '.trabajo-intro',
-          start: 'top 85%',
-        },
+        scrollTrigger: { trigger: '.trabajo-intro', start: 'top 85%' },
         opacity: 1, y: 0, duration: 1, ease: 'power3.out'
       });
 
-      // Grid items — stagger by batches
-      gsap.to('.trabajo-item', {
-        scrollTrigger: {
-          trigger: '.trabajo-grid',
-          start: 'top 80%',
-        },
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        stagger: 0.1,
-        ease: 'power3.out'
+      // Cada bloque de servicio
+      gsap.utils.toArray('.srv-bloque').forEach((bloque, i) => {
+        gsap.to(bloque, {
+          scrollTrigger: { trigger: bloque, start: 'top 80%' },
+          opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+          delay: 0.1 * i
+        });
+
+        // Fotos dentro del bloque con stagger
+        gsap.from(bloque.querySelectorAll('.trabajo-item'), {
+          scrollTrigger: { trigger: bloque, start: 'top 75%' },
+          opacity: 0, y: 30, duration: 0.8, stagger: 0.12, ease: 'power3.out'
+        });
       });
     });
   </script>
