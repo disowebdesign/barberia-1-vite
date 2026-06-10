@@ -33,7 +33,7 @@ tl.call(() => {
     if (target) {
       setTimeout(() => {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      }, 25)
+      }, 0)
     }
   }
 })
